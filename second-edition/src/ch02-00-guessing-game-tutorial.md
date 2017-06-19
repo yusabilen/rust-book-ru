@@ -1,35 +1,37 @@
-# Guessing Game
+# Угадайка
 
-Let’s jump into Rust by working through a hands-on project together! This
-chapter introduces you to a few common Rust concepts by showing you how to use
-them in a real program. You’ll learn about `let`, `match`, methods, associated
-functions, using external crates, and more! The following chapters will explore
-these ideas in more detail. In this chapter, you’ll practice the fundamentals.
+Давайте начнем погружение в Rust с практического использования его для решения
+реальной задачи! Эта глава познакомит вас с распространёнными концепциями
+Rust и покажет на примере реальной программы как вы можете их использовать.
+Вы узнаете что такое `let`, `match`, методы, ассоциированные функции, научитесь
+использовать внешние контейнеры и много чего ещё! В последующих главах все эти
+вещи будут рассмотрены более подробно, а в этой главе мы сосредоточимся на основах.
 
-We’ll implement a classic beginner programming problem: a guessing game. Here’s
-how it works: the program will generate a random integer between 1 and 100. It
-will then prompt the player to enter a guess. After entering a guess, it will
-indicate whether the guess is too low or too high. If the guess is correct, the
-game will print congratulations and exit.
+Мы займёмся классической задачей для начинающих: игрой-угадайкой. Она работает
+следующим образом: программа генерирует случайно целое число от 1 до 100. Затем
+игрок должен попытаться угадать "загаданное" число. После каждой попытки программа
+сообщает больше или меньше число, введенное игроком, чем загаданное. Если игрок
+верно угадывает число -- программа выводит поздравление и завершает свою работу.
 
-## Setting Up a New Project
+## Создание нового проекта
 
-To set up a new project, go to the *projects* directory that you created in
-Chapter 1, and make a new project using Cargo, like so:
+Для того чтобы начать работу с новым проектом перейдите в директорию *projects*,
+мы рассматривали её в первой главе, и создайте проект с помощью Cargo:
 
 ```text
 $ cargo new guessing_game --bin
 $ cd guessing_game
 ```
 
-The first command, `cargo new`, takes the name of the project (`guessing_game`)
-as the first argument. The `--bin` flag tells Cargo to make a binary project,
-similar to the one in Chapter 1. The second command changes to the new
-project’s directory.
+Первая команда, `cargo new`, получает в качестве первого аргумента название нового
+проекта (`guessing_game`). Флаг `--bin` сообщает Cargo о том что мы создаем проект,
+который будет компилироваться в исполняемый файл, это примерно то же самое, что мы
+делали в первой главе. Вторая команда переходит в новую директорую проекта, которую
+создал для нас Cargo.
 
-Look at the generated *Cargo.toml* file:
+Давайте взглянем на файл *Cargo.toml*, находящийся в этой директории:
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Файл: Cargo.toml</span>
 
 ```toml
 [package]
@@ -40,13 +42,13 @@ authors = ["Your Name <you@example.com>"]
 [dependencies]
 ```
 
-If the author information that Cargo obtained from your environment is not
-correct, fix that in the file and save it again.
+Если информация об авторе, которую Cargo автоматически получил из вашего окружения,
+некорректна -- исправьте ее прямо в этом файле и сохраните.
 
-As you saw in Chapter 1, `cargo new` generates a “Hello, world!” program for
-you. Check out the *src/main.rs* file:
+Как вы уже видели в первой главе, `cargo new` создает простейшую программу для вас.
+Посмотрим на содержимое файла *src/main.rs*:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Файл: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -54,8 +56,8 @@ fn main() {
 }
 ```
 
-Now let’s compile this “Hello, world!” program and run it in the same step
-using the `cargo run` command:
+Теперь скомпилируем эту программу и сразу же её запустим. Для этого в Cargo есть
+специальная команда `cargo run`:
 
 ```text
 $ cargo run
@@ -64,11 +66,11 @@ $ cargo run
 Hello, world!
 ```
 
-The `run` command comes in handy when you need to rapidly iterate on a project,
-and this game is such a project: we want to quickly test each iteration
-before moving on to the next one.
+Команда `run` весьма полезна, когда вам нужно часто пересобирать проект и,
+какая удача, наша игра как раз такой и является: нам нужно иметь возможность
+быстро тестировать новые изменения, преждем чем мы двинемся дальше.
 
-Reopen the *src/main.rs* file. You’ll be writing all the code in this file.
+Откройте файл *src/main.rs*. Именно здесь мы и будем писать весь следующий код.
 
 ## Processing a Guess
 
